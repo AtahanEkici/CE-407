@@ -1,6 +1,7 @@
 package CE407;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,11 +35,24 @@ Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         ResultSet rs = s.executeQuery("select * from "+name+"");
         
 while(rs.next())
-        System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getInt(3)+ " " +rs.getString(4));
+        System.out.println(rs.getString(1)+"  "+rs.getInt(2)+"  "+rs.getString(3)+ " " +rs.getInt(4));
     }
     
-    public static void setData(String tablename)
+    public static void setData(String id, int code, String address, int age) throws SQLException
     {
+        try{
+        PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?)");
         
+        s.setString(1,id);
+        s.setInt(2,code);
+        s.setString(3,address);
+        s.setInt(4,age);
+        
+        s.execute();
+       
+    }catch(SQLException e)
+    {
+        System.out.println(e);
+    }
     }
 }

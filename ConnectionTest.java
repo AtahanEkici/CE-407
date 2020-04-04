@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package CE407;
-import static CE407.MysqlConnection.getConnection;
 import java.sql.*;  
 
 
@@ -16,11 +15,15 @@ public class ConnectionTest
         
         MysqlConnection.getConnection();
         
+        MysqlConnection.getData("voter");
         
+        System.out.println("\n");
+
+        MysqlConnection.setData("32920020424",4629,"Fahrettin Altay",36);
         
-      
-      
-     
+        System.out.println("\n");
+        
+        MysqlConnection.getData("voter");
     }
     
 }
