@@ -6,6 +6,6 @@ FOR EACH ROW
 
 BEGIN
 
-UPDATE integrity.Delete_Count SET integrity.Delete_Count = integrity.Delete_Count +1;
+UPDATE voter.integrity SET integrity.delete_count = integrity.delete_count +1;
 
 END;

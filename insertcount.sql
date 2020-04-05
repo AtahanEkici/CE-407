@@ -1,11 +1,11 @@
 DELIMITER //
 
 Create Trigger INSERT_COUNT
-AFTER INSERT ON voters
+AFTER INSERT ON voter
 FOR EACH ROW
 
 BEGIN
 
-UPDATE integrity.Add_Count SET integrity.Add_Count = integrity.Add_Count +1;
+UPDATE voter.integrity SET integrity.insert_count = integrity.insert_count + 1;
 
 END;
