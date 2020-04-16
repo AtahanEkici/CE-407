@@ -1,12 +1,16 @@
 package CE407;
 
 
+import static java.nio.file.Files.list;
+import static java.rmi.Naming.list;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import static java.util.Collections.list;
 
 // As suggested from the manual all functions should not be called like java.sql.*; //
 /**
@@ -39,10 +43,10 @@ Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj cl
         ResultSet rs = s.executeQuery("select * from "+name+"");
         
 while(rs.next())
-        System.out.println(rs.getString(1)+" "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)); // geting data from 5 different columns //
+        System.out.println(rs.getString(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)+" "+rs.getString(6)); // geting data from 5 different columns //
     }
     
-    public static void setData(String id,String code, String tel_num, int age,String address, String email) throws SQLException // Function //
+    public static void setAllData(String id,String code, String tel_num, int age,String address, String email) throws SQLException // Function //
     {
         try{
         PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?,?)"); // inserting corresponding tuples //
@@ -104,5 +108,18 @@ st.execute();
         System.out.println(e); // Printing the exception //
     }
 }
+        
+        public static ArrayList<String> GatherMailAdresses() throws SQLException
+        {
+            Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("select voter.Email From voter");
+        ArrayList<String> list;
+        list = new ArrayList<>();
+        
+while(rs.next())
+{
+        list.add(rs.getString(1)); // geting data from 5 different columns //
+ } 
+       return list; 
 }
-
+}
