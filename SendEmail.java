@@ -92,8 +92,12 @@ System.out.println("Sent message successfully.... hopefully");
      return str;
 }  
  
- public static void SendAll(String [] Mails)
+ public static void SendAll(ArrayList<String> Mails) throws InstantiationException, IllegalAccessException, SQLException
  {
-     //empty for now to be updated //
+       for(int i = 0; i<Mails.size();i++)
+       {
+           SendMail(Mails.get(i));
+           System.out.println("Sent to "+Mails.get(i)+"");
+       }
  }
 }
