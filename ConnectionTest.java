@@ -4,27 +4,37 @@
  * and open the template in the editor.
  */
 package CE407;
-import java.sql.*;  
-
+import java.sql.*;
+import static CE407.SendEmail.*;
+import static CE407.MysqlConnection.setSpecificData;
+import static CE407.MysqlConnection.updateCode;
 
 public class ConnectionTest 
 {
     public static void main(String args[]) throws SQLException, InstantiationException, IllegalAccessException
     { 
-        MysqlConnection mc = new MysqlConnection();
         
         MysqlConnection.getConnection();
         
-        MysqlConnection.getData("voter");
+        //updateCode("atahanekici@hotmail.com","7977");
         
-        System.out.println("\n");
+       // MysqlConnection.getData("voter");
+        
+        //System.out.println("\n");
 
-        MysqlConnection.setData("32920020424",4629,"Fahrettin Altay",36);
+       // MysqlConnection.setSpecificData("22089345638","05273382894",36,"Buca","berkay.omerbas@gmail.com");
         
-        System.out.println("\n");
+        //System.out.println("\n");
         
-        MysqlConnection.getData("voter");
+        //MysqlConnection.getData("voter");
+        
+        
+       //System.out.println(CodeGenerator());
+       
+       //SendMail("yigitdemircan@gmail.com");
+       
+       //System.out.println(CodeGenerator());
+
     }
     
 }
-
