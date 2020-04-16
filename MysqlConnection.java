@@ -1,4 +1,6 @@
 package CE407;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -6,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// As suggested from the 
+// As suggested from the manual all functions should not be called like java.sql.*; //
 /**
  *
  * @author atahan ekici
@@ -37,25 +39,70 @@ Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj cl
         ResultSet rs = s.executeQuery("select * from "+name+"");
         
 while(rs.next())
-        System.out.println(rs.getString(1)+"  "+rs.getInt(2)+"  "+rs.getString(3)+ " " +rs.getInt(4)); // geting data from 4 different columns //
+        System.out.println(rs.getString(1)+" "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)); // geting data from 5 different columns //
     }
     
-    public static void setData(String id, int code, String address, int age) throws SQLException
+    public static void setData(String id,String code, String tel_num, int age,String address, String email) throws SQLException // Function //
     {
         try{
-        PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?)"); // inserting corresponding tuples //
+        PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?,?)"); // inserting corresponding tuples //
         
-        // PARAMATER LOADING
+        // PARAMATER LOADING //
         s.setString(1,id);
-        s.setInt(2,code);
-        s.setString(3,address);
+        s.setString(2, code);
+        s.setString(3,tel_num);
         s.setInt(4,age);
+        s.setString(5,address);
+        s.setString(6,email);
+        // PARAMETERS LOADED //
         
         s.execute(); // executing the command //
        
-    }catch(SQLException e)
+    }catch(SQLException e) //Exception handling //
     {
-        System.out.println(e);
+        System.out.println(e); // Printing the exception //
     }
+    }
+
+    
+        public static void setSpecificData(String id,String Tel_num,int age,String address, String email) throws SQLException // Function //
+    {
+       try{
+        PreparedStatement s = con.prepareStatement("insert into `voter`(ID,Tel_num,Age,Address,Email) values(?,?,?,?,?)"); // inserting corresponding tuples //
+        
+        // PARAMATER LOADING //
+        s.setString(1,id);
+        s.setString(2,Tel_num);
+        s.setInt(3,age);
+        s.setString(4,address);
+        s.setString(5,email);
+        // PARAMETERS LOADED //
+        
+        s.execute(); // executing the command //
+       
+    }catch(SQLException e) //Exception handling //
+    {
+        System.out.println(e); // Printing the exception //
+    }
+    }
+        
+        public static void updateCode(String Email,String code) throws SQLException
+        {
+            try
+            {
+             String sqlUpdate;
+                sqlUpdate = "UPDATE voter\n"
+                        + "SET Code = ? "
+                        + "WHERE Email = '"+Email+"'";
+             
+PreparedStatement st = con.prepareStatement(sqlUpdate);
+st.setString(1, code);
+st.execute();
+
+            }catch(SQLException e) //Exception handling //
+    {
+        System.out.println(e); // Printing the exception //
     }
 }
+}
+
