@@ -121,5 +121,5 @@ while(rs.next())
         list.add(rs.getString(1)); // geting data from 5 different columns //
  } 
        return list; 
-}
+}            
 }
