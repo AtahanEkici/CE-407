@@ -99,5 +99,7 @@ System.out.println("Sent message successfully.... hopefully");
            SendMail(Mails.get(i));
            System.out.println("Sent to "+Mails.get(i)+"");
        }
+       
+       
  }
 }
