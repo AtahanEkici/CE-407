@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package CE407;
+import static CE407.MysqlConnection.GatherMailAdresses;
 import java.sql.*;
 import static CE407.SendEmail.*;
 import static CE407.MysqlConnection.setSpecificData;
@@ -18,7 +19,9 @@ public class ConnectionTest
         
         //updateCode("atahanekici@hotmail.com","7977");
         
-       // MysqlConnection.getData("voter");
+       //MysqlConnection.getData("voter");
+       
+       //System.out.println(MysqlConnection.GatherMailAdresses().get(0));
         
         //System.out.println("\n");
 
@@ -34,7 +37,10 @@ public class ConnectionTest
        //SendMail("yigitdemircan@gmail.com");
        
        //System.out.println(CodeGenerator());
+       
+       SendAll(MysqlConnection.GatherMailAdresses());
 
     }
     
 }
+
