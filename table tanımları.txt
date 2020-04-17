@@ -1,0 +1,9 @@
+Create table Integrity(
+delete_count int not null default '0',
+insert_count int not null default '0',
+update_count int not null default '0',
+
+check(delete_count > -1),
+check(insert_count > -1),
+check(update_count > -1)
+);
