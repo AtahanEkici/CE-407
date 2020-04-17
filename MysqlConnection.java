@@ -43,7 +43,7 @@ Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj cl
         ResultSet rs = s.executeQuery("select * from "+name+"");
         
 while(rs.next())
-        System.out.println(rs.getString(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)+" "+rs.getString(6)); // geting data from 5 different columns //
+        System.out.println(rs.getString(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)+" "+rs.getString(6)+" ---Voted: "+rs.getBoolean(7)); // geting data from 5 different columns //
     }
     
     public static void setAllData(String id,String code, String tel_num, int age,String address, String email) throws SQLException // Function //
@@ -66,6 +66,20 @@ while(rs.next())
     {
         System.out.println(e); // Printing the exception //
     }
+    }
+    
+    
+    public static void Who_Is_Voted() throws SQLException
+    {
+        Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("select ID,Is_Voted from voter");
+        
+        while(rs.next())
+        {
+            System.out.println(rs.getString(1)+" Is_Voted: " + rs.getBoolean(2));
+        }
+        
+        
     }
 
     
