@@ -12,8 +12,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import static CE407.MysqlConnection.updateCode;
 import java.sql.SQLException;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class SendEmail 
 {
@@ -23,9 +21,9 @@ public class SendEmail
  String to = ""+receiver+"";
 
 // Add sender
- String from = "laythese@gmail.com";
- final String username = "laythese@gmail.com";//your Gmail username 
- final String password = "dwzqtjtgmaxygsfe";//your Gmail password
+ String from = "ce407project@gmail.com";
+ final String username = "ce407project@gmail.com";//your Gmail username 
+ final String password = "ce407project";//your Gmail password
 
 String host = "smtp.gmail.com";
 
