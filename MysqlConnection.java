@@ -103,7 +103,29 @@ while(rs.next())
         System.out.println(e); // Printing the exception //
     }
     }
+   
+        public static boolean Is_Voted(String ID) throws SQLException
+        {  
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("select Is_Voted from voter where ID = '"+ID+"'");
+        int b = 0;
         
+        while(rs.next())
+        {
+            b = rs.getInt(1);
+        }
+        
+        if(b == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        }
+
         public static void updateCode(String Email,String code) throws SQLException
         {
             try
