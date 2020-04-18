@@ -37,16 +37,16 @@ Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj cl
 }  
 }
     
-    public static void getData(String name) throws SQLException
+    public static void getData() throws SQLException
     {
         Statement s = con.createStatement();
-        ResultSet rs = s.executeQuery("select * from "+name+"");
+        ResultSet rs = s.executeQuery("select * from voter");
         
 while(rs.next())
         System.out.println(rs.getString(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)+" "+rs.getString(6)+" ---Voted: "+rs.getBoolean(7)); // geting data from 5 different columns //
     }
     
-    public static void setAllData(String id,String code, String tel_num, int age,String address, String email) throws SQLException // Function //
+    public static void setAllData(String id,String code, String tel_num, int age,String address, String email,boolean Is_Voted) throws SQLException // Function //
     {
         try{
         PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?,?)"); // inserting corresponding tuples //
@@ -58,6 +58,7 @@ while(rs.next())
         s.setInt(4,age);
         s.setString(5,address);
         s.setString(6,email);
+        s.setBoolean(7, Is_Voted);
         // PARAMETERS LOADED //
         
         s.execute(); // executing the command //
@@ -77,16 +78,13 @@ while(rs.next())
         while(rs.next())
         {
             System.out.println(rs.getString(1)+" Is_Voted: " + rs.getBoolean(2));
-        }
-        
-        
+        }  
     }
-
     
-        public static void setSpecificData(String id,String Tel_num,int age,String address, String email) throws SQLException // Function //
+        public static void setSpecificData(String id,String Tel_num,int age,String address, String email, boolean Is_Voted) throws SQLException // Function //
     {
        try{
-        PreparedStatement s = con.prepareStatement("insert into `voter`(ID,Tel_num,Age,Address,Email) values(?,?,?,?,?)"); // inserting corresponding tuples //
+        PreparedStatement s = con.prepareStatement("insert into `voter`(ID,Tel_num,Age,Address,Email,Is_voted) values(?,?,?,?,?,?)"); // inserting corresponding tuples //
         
         // PARAMATER LOADING //
         s.setString(1,id);
@@ -94,6 +92,7 @@ while(rs.next())
         s.setInt(3,age);
         s.setString(4,address);
         s.setString(5,email);
+        s.setBoolean(1,Is_Voted);
         // PARAMETERS LOADED //
         
         s.execute(); // executing the command //
