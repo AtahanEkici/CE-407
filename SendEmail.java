@@ -21,7 +21,7 @@ public class SendEmail
  String to = ""+receiver+"";
 
 // Add sender
- String from = "ce407project@gmail.com";
+ final String from = "ce407project@gmail.com";
  final String username = "ce407project@gmail.com";//your Gmail username 
  final String password = "ce407project";//your Gmail password
 
@@ -92,12 +92,10 @@ System.out.println("Sent message successfully.... hopefully");
  
  public static void SendAll(ArrayList<String> Mails) throws InstantiationException, IllegalAccessException, SQLException
  {
-       for(int i = 0; i<Mails.size();i++)
+       for(int i = 0; i < Mails.size();i++)
        {
            SendMail(Mails.get(i));
            System.out.println("Sent to "+Mails.get(i)+"");
-       }
-       
-       
+       }   
  }
 }
