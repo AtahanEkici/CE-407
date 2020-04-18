@@ -9,6 +9,8 @@ import java.sql.*;
 import static CE407.SendEmail.*;
 import static CE407.MysqlConnection.setSpecificData;
 import static CE407.MysqlConnection.updateCode;
+import static CE407.MysqlConnection.Is_Voted;
+import static CE407.MysqlConnection.Who_Is_Voted;
 
 public class ConnectionTest 
 {
@@ -17,11 +19,15 @@ public class ConnectionTest
         
         MysqlConnection.getConnection();
         
-        //updateCode("atahanekici@hotmail.com","7977");
+        //System.out.println(CodeGenerator());
         
-       //MysqlConnection.getData("voter");
+        //updateCode("atahanekici@hotmail.com",CodeGenerator());
+        
+        //System.out.println(MysqlConnection.Is_Voted());
+        
+       //MysqlConnection.getData();
        
-       //System.out.println(MysqlConnection.GatherMailAdresses().get(0));
+       //System.out.println(MysqlConnection.GatherMailAdresses());
         
         //System.out.println("\n");
 
@@ -29,8 +35,11 @@ public class ConnectionTest
         
         //System.out.println("\n");
         
-        //MysqlConnection.getData("voter");
+        MysqlConnection.getData();
         
+        //System.out.println(Is_Voted("60789024567"));
+        
+        //Who_Is_Voted();
         
        //System.out.println(CodeGenerator());
        
@@ -38,9 +47,7 @@ public class ConnectionTest
        
        //System.out.println(CodeGenerator());
        
-       SendAll(MysqlConnection.GatherMailAdresses());
+       //SendAll(MysqlConnection.GatherMailAdresses());
 
-    }
-    
+    }   
 }
-
