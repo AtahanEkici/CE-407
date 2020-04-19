@@ -35,9 +35,13 @@ public class ConnectionTest
         
         //System.out.println("\n");
         
-        MysqlConnection.getData();
+        //MysqlConnection.getDataVoter();
         
-        //System.out.println(Is_Voted("60789024567"));
+        MysqlConnection.getDataCandidate();
+        
+        //System.out.println(Is_Voted("22089345638"));
+        
+        //MysqlConnection.getDataIntegrity();
         
         //Who_Is_Voted();
         
