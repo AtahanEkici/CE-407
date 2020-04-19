@@ -19,13 +19,19 @@ public class ConnectionTest
         
         MysqlConnection.getConnection();
         
+        //System.out.println(isValidEmailAddress("dfgdfsdfzgzdfhgfgxhfxgjhnfxgjhfghjfxgjxhfg@gmail.com"));
+        
+        isValidAll();
+        
         //System.out.println(CodeGenerator());
         
         //updateCode("atahanekici@hotmail.com",CodeGenerator());
         
         //System.out.println(MysqlConnection.Is_Voted());
         
-       //MysqlConnection.getData();
+       //MysqlConnection.getDataVoter();
+       
+       //MysqlConnection.Set_Voted("16820020678",false);
        
        //System.out.println(MysqlConnection.GatherMailAdresses());
         
@@ -37,7 +43,7 @@ public class ConnectionTest
         
         //MysqlConnection.getDataVoter();
         
-        MysqlConnection.getDataCandidate();
+        //MysqlConnection.getDataCandidate();
         
         //System.out.println(Is_Voted("22089345638"));
         
@@ -52,6 +58,5 @@ public class ConnectionTest
        //System.out.println(CodeGenerator());
        
        //SendAll(MysqlConnection.GatherMailAdresses());
-
     }   
 }
