@@ -174,5 +174,16 @@ while(rs.next())
         list.add(rs.getString(1)); // geting data from 5 different columns //
  } 
        return list; 
-}            
+}       
+        public static void Set_Voted(String ID, boolean value) throws SQLException
+        {
+            try{   
+        Statement s = con.createStatement();
+        String sql = "update voter SET Is_Voted = "+value+" WHERE ID ='"+ID+"'";
+        s.executeUpdate(sql);
+            }catch(SQLException e)
+            {
+                System.out.println(e);
+            }
+        }
 }
