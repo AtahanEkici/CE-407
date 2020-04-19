@@ -181,9 +181,10 @@ while(rs.next())
         Statement s = con.createStatement();
         String sql = "update voter SET Is_Voted = "+value+" WHERE ID ='"+ID+"'";
         s.executeUpdate(sql);
+        System.out.println("Succesfully changed!");
             }catch(SQLException e)
             {
                 System.out.println(e);
             }
-        }
+        } 
 }
