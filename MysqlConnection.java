@@ -37,7 +37,7 @@ Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj cl
 }  
 }
     
-    public static void getData() throws SQLException
+    public static void getDataVoter() throws SQLException
     {
         Statement s = con.createStatement();
         ResultSet rs = s.executeQuery("select * from voter");
@@ -69,8 +69,26 @@ while(rs.next())
     }
     }
     
+    public static void getDataIntegrity() throws SQLException
+    {
+         Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("select * from integrity");
+        
+while(rs.next())
+        System.out.println("Delete Count:"+rs.getInt(1)+"\n Insert Count: "+rs.getInt(2)+"\n Update Count: "+rs.getInt(3)); // geting data from 3 different columns //
+    }
     
-    public static void Who_Is_Voted() throws SQLException
+    public static void getDataCandidate() throws SQLException
+    {
+         Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("select * from integrity");
+        
+while(rs.next())
+        System.out.println("Name:"+rs.getString(1)+"\nVote Count : "+rs.getLong(2)); // geting data from 2 different columns //
+    }
+    
+    
+    public static void Who_Is_Voted() throws SQLException //Function for shoving the name of the voter and if the corresponding person to that name is voted or not //
     {
         Statement s = con.createStatement();
         ResultSet rs = s.executeQuery("select ID,Is_Voted from voter");
@@ -92,7 +110,7 @@ while(rs.next())
         s.setInt(3,age);
         s.setString(4,address);
         s.setString(5,email);
-        s.setBoolean(1,Is_Voted);
+        s.setBoolean(6,Is_Voted);
         // PARAMETERS LOADED //
         
         s.execute(); // executing the command //
