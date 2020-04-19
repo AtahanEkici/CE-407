@@ -12,6 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import static CE407.MysqlConnection.updateCode;
 import java.sql.SQLException;
+import javax.mail.internet.AddressException;
 
 public class SendEmail 
 {
@@ -97,5 +98,42 @@ System.out.println("Sent message successfully.... hopefully");
            SendMail(Mails.get(i));
            System.out.println("Sent to "+Mails.get(i)+"");
        }   
+ }
+ 
+ public static boolean isValidEmailAddress(String email) {
+   boolean result = true;
+   try {
+      InternetAddress emailAddr = new InternetAddress(email);
+      emailAddr.validate();
+   } catch (AddressException ex) 
+   {
+       System.out.println(ex);
+      result = false;
+   }
+   return result;
+}
+ 
+ public static void isValidAll() throws SQLException
+ {
+     try{
+     ArrayList <String> list = new <String> ArrayList();
+     list = MysqlConnection.GatherMailAdresses();
+     
+     for(int i=0;i<list.size();i++)
+     {
+         if(isValidEmailAddress(list.get(i)) == true)
+         {
+             System.out.println(""+list.get(i)+": is valid");
+         }
+         else
+         {
+             System.out.println(""+list.get(i)+": is invalid");
+         }
+     }
+     
+     }catch(SQLException e)
+     {
+         System.out.println(e);
+     }
  }
 }
