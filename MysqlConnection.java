@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import static java.util.Collections.list;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // As suggested from the manual all functions should not be called like java.sql.*; //
 /**
@@ -161,6 +163,28 @@ st.execute();
         System.out.println(e); // Printing the exception //
     }
 }
+        
+        public static void Vote(String ID , String Candidate_name)
+        {
+    try {
+         String sqlUpdate;
+         sqlUpdate = "update candidate set Vote_Count = Vote_Count + 1 where name = ? ";
+         PreparedStatement st = con.prepareStatement(sqlUpdate);
+         st.setString(1, Candidate_name);
+         st.execute();
+         
+          String sqlUpdate2;
+          sqlUpdate2 = "update voter set Is_Voted = TRUE where ID = ?";
+          PreparedStatement st2 = con.prepareStatement(sqlUpdate2);
+          st2.setString(1, ID);
+          st2.execute();
+          
+    } catch (SQLException e) 
+    {
+        System.out.println(e);
+    }
+            
+        }
         
         public static ArrayList<String> GatherMailAdresses() throws SQLException
         {
