@@ -5,8 +5,7 @@ for each row
 
 begin
 
-IF(Is_Voted = TRUE) THEN 
+IF(voter.voter.Is_Voted = 1) THEN 
  signal sqlstate '45000' set message_text = 'This person is already voted can not change credentials';
  END IF;
- 
- END; 
+ END //
