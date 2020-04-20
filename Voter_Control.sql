@@ -1,11 +1,11 @@
 DELIMITER //
 CREATE TRIGGER VOTER_CONTROL
-before update on voter
-for each row
+BEFORE UPDATE ON voter
+FOR EACH ROW
 
-begin
+BEGIN
 
-IF(voter.voter.Is_Voted = 1) THEN 
+IF((SELECT voter.Is_Voted FROM voter WHERE ID = NEW.ID) IS TRUE) THEN 
  signal sqlstate '45000' set message_text = 'This person is already voted can not change credentials';
  END IF;
  END //
