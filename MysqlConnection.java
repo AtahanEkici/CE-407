@@ -238,7 +238,7 @@ while(rs.next())
             }
         } 
         
-        public static void Delete_Non_Valid_Emails()
+        public static void Update_Non_Valid_Emails()
         {  
     try {
         ArrayList <String> list = new <String> ArrayList();
