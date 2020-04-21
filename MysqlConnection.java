@@ -1,6 +1,7 @@
 package CE407;
 
 
+import static CE407.MysqlConnection.percentage;
 import static java.nio.file.Files.list;
 import static java.rmi.Naming.list;
 import java.sql.Connection;
@@ -83,7 +84,7 @@ while(rs.next())
     public static void getDataCandidate() throws SQLException
     {
          Statement s = con.createStatement();
-        ResultSet rs = s.executeQuery("select * from integrity");
+        ResultSet rs = s.executeQuery("select * from candidate");
         
 while(rs.next())
         System.out.println("Name:"+rs.getString(1)+"\nVote Count : "+rs.getLong(2)); // geting data from 2 different columns //
@@ -99,6 +100,30 @@ while(rs.next())
         {
             System.out.println(rs.getString(1)+" Is_Voted: " + rs.getBoolean(2));
         }  
+    }
+    
+    public static double percentage() throws SQLException
+    {
+        Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("select COUNT(Is_Voted) FROM voter WHERE Is_Voted = TRUE");
+        int voted = 0,total_count = 1;
+        double percentage;
+
+        while(rs.next())
+        {
+              voted = rs.getInt(1);
+        }
+       
+        Statement s2 = con.createStatement();
+        ResultSet rs2 = s2.executeQuery("SELECT DISTINCT COUNT(ID) FROM voter");
+        while(rs2.next())
+        {
+            total_count = rs2.getInt(1);
+        }
+
+         percentage = (voted * (100/total_count) / total_count * (100/total_count));
+        return percentage;
+
     }
     
         public static void setSpecificData(String id,String Tel_num,int age,String address, String email, boolean Is_Voted) throws SQLException // Function //
