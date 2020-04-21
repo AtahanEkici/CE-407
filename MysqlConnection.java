@@ -2,6 +2,7 @@ package CE407;
 
 
 import static CE407.MysqlConnection.percentage;
+import static CE407.SendEmail.isValidEmailAddress;
 import static java.nio.file.Files.list;
 import static java.rmi.Naming.list;
 import java.sql.Connection;
@@ -236,4 +237,24 @@ while(rs.next())
                 System.out.println(e);
             }
         } 
+        
+        public static void Delete_Non_Valid_Emails()
+        {  
+    try {
+        ArrayList <String> list = new <String> ArrayList();
+        list = MysqlConnection.GatherMailAdresses();
+        for(int i=0;i<list.size();i++)
+        {
+            if(isValidEmailAddress(list.get(i)) == false)
+            {
+                 Statement s = con.createStatement();
+                 String sql = "UPDATE voter SET Email ='nonvalid@mail.com' WHERE Email= '"+list.get(i)+"'";
+                 s.executeUpdate(sql);
+                System.out.println(""+list.get(i)+": is changed to nonvalid@mail.com");
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error: "+e);
+    }
+        }
 }
