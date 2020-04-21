@@ -7,10 +7,12 @@ package CE407;
 import static CE407.MysqlConnection.GatherMailAdresses;
 import java.sql.*;
 import static CE407.SendEmail.*;
+import CE407.MysqlConnection.*;
 import static CE407.MysqlConnection.setSpecificData;
 import static CE407.MysqlConnection.updateCode;
 import static CE407.MysqlConnection.Is_Voted;
 import static CE407.MysqlConnection.Who_Is_Voted;
+import static CE407.MysqlConnection.percentage;
 
 public class ConnectionTest 
 {
@@ -19,9 +21,11 @@ public class ConnectionTest
         
         MysqlConnection.getConnection();
         
+        System.out.println(percentage());
+        
         //System.out.println(isValidEmailAddress("dfgdfsdfzgzdfhgfgxhfxgjhnfxgjhfghjfxgjxhfg@gmail.com"));
         
-        isValidAll();
+        //isValidAll();
         
         //System.out.println(CodeGenerator());
         
@@ -41,13 +45,18 @@ public class ConnectionTest
         
         //System.out.println("\n");
         
-        //MysqlConnection.getDataVoter();
+       // MysqlConnection.getDataVoter();
+        
+       // System.out.println("\n");
         
         //MysqlConnection.getDataCandidate();
         
+         //System.out.println("\n");
+         
+         //MysqlConnection.getDataIntegrity();
+        
         //System.out.println(Is_Voted("22089345638"));
         
-        //MysqlConnection.getDataIntegrity();
         
         //Who_Is_Voted();
         
