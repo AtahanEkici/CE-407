@@ -27,8 +27,9 @@ DROP TABLE IF EXISTS `candidate`;
 CREATE TABLE `candidate` (
   `Name` varchar(100) NOT NULL,
   `Vote_Count` bigint NOT NULL,
-  CONSTRAINT `candidate_chk_1` CHECK ((char_length(`NAME`) > 0)),
-  CONSTRAINT `candidate_chk_2` CHECK ((`Vote_Count` > -(1)))
+  PRIMARY KEY (`Name`),
+  CONSTRAINT `candidate_chk_1` CHECK ((char_length(`Name`) > 0)),
+  CONSTRAINT `candidate_chk_2` CHECK ((`Vote_Count` > -1))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -65,7 +66,7 @@ CREATE TABLE `integrity` (
 
 LOCK TABLES `integrity` WRITE;
 /*!40000 ALTER TABLE `integrity` DISABLE KEYS */;
-INSERT INTO `integrity` VALUES (1,4,375);
+INSERT INTO `integrity` VALUES (1,4,723);
 /*!40000 ALTER TABLE `integrity` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -133,7 +134,7 @@ CREATE TABLE `voter` (
 
 LOCK TABLES `voter` WRITE;
 /*!40000 ALTER TABLE `voter` DISABLE KEYS */;
-INSERT INTO `voter` VALUES ('16820020678',NULL,'05433453732',22,'Kadifekale','atahanekici@hotmail.com',0),('22089345638',NULL,'05273382894',36,'Buca','berkay.omerbas@gmail.com',0),('60789024567',NULL,'+07894356021',45,'LimonTepe','yigitdemircan@gmail.com',0);
+INSERT INTO `voter` VALUES ('16820020678',NULL,'05433453732',22,'Kadifekale','atahanekici@hotmail.com',0),('22089345638',NULL,'05273382894',36,'Buca','berkay.omerbas@gmail.com',0),('60789024567',NULL,'05894356021',45,'LimonTepe','yigitdemircan@gmail.com',0);
 /*!40000 ALTER TABLE `voter` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -245,6 +246,26 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `VOTER_CONTROL` BEFORE UPDATE ON `voter` FOR EACH ROW BEGIN
+
+IF((SELECT voter.Is_Voted FROM voter WHERE ID = NEW.ID) IS TRUE) THEN 
+ signal sqlstate '45000' set message_text = 'This person is already voted can not change credentials';
+ END IF;
+ END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `UPDATE_COUNT` AFTER UPDATE ON `voter` FOR EACH ROW BEGIN
 
 UPDATE voter.integrity SET integrity.update_count = integrity.update_count + 1;
@@ -313,4 +334,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-19 20:41:24
+-- Dump completed on 2020-04-22 16:51:00
