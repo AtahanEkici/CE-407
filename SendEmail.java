@@ -71,6 +71,59 @@ System.out.println("Sent message successfully.... hopefully");
  }
  }
  
+ 
+ public static void SendMessage(String receiver,String Subject,String mesaj) throws InstantiationException, IllegalAccessException, SQLException {
+ // Add recipient
+ String to = ""+receiver+"";
+
+// Add sender
+ final String from = "ce407project@gmail.com";
+ final String username = "ce407project@gmail.com";//your Gmail username 
+ final String password = "ce407project";//your Gmail password
+
+String host = "smtp.gmail.com";
+
+Properties props = new Properties();
+ props.put("mail.smtp.auth", "true");
+ props.put("mail.smtp.starttls.enable", "true"); 
+ props.put("mail.smtp.host", host);
+ props.put("mail.smtp.port", "587");
+
+// Get the Session object
+ Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+    @Override
+    protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication(username,password);
+    }
+});
+
+try {
+ // Create a default MimeMessage object
+ Message message = new MimeMessage(session);
+ 
+ message.setFrom(new InternetAddress(from));
+ 
+ message.setRecipients(Message.RecipientType.TO,
+ InternetAddress.parse(to));
+ 
+ // Set Subject
+ message.setSubject(""+Subject+"");
+ 
+ // Put the content of your message
+ message.setText(""+mesaj+"");
+
+// Send message
+ Transport.send(message);
+
+System.out.println("Sent message successfully.... hopefully");
+
+} catch (MessagingException e) 
+{
+ throw new RuntimeException(e);
+ }
+ }
+ 
+ 
  public static String CodeGenerator()
 {
     ArrayList<Integer> list = new ArrayList<>(4);
