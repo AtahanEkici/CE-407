@@ -35,6 +35,7 @@ String password = "1234"; // password for the database //
 Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj class file //
 
  con = DriverManager.getConnection(url,username,password); // 
+ System.out.println("Connection successfull");
 }catch(ClassNotFoundException | SQLException e)
 { 
    System.out.println(e);
@@ -47,13 +48,13 @@ Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj cl
         ResultSet rs = s.executeQuery("select * from voter");
         
 while(rs.next())
-        System.out.println(rs.getString(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)+" "+rs.getString(6)+" ---Voted: "+rs.getBoolean(7)); // geting data from 5 different columns //
+        System.out.println(rs.getString(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)+" "+rs.getString(6)+" ---Voted: "+rs.getBoolean(7)+" ---Password: "+rs.getString(8)); // geting data from 5 different columns //
     }
     
-    public static void setAllData(String id,String code, String tel_num, int age,String address, String email,boolean Is_Voted) throws SQLException // Function //
+    public static void setAllData(String id,String code, String tel_num, int age,String address, String email,boolean Is_Voted, String Password) throws SQLException // Function //
     {
         try{
-        PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?,?)"); // inserting corresponding tuples //
+        PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?,?,?,?,?)"); // inserting corresponding tuples //
         
         // PARAMATER LOADING //
         s.setString(1,id);
@@ -63,6 +64,7 @@ while(rs.next())
         s.setString(5,address);
         s.setString(6,email);
         s.setBoolean(7, Is_Voted);
+        s.setString(8,Password);
         // PARAMETERS LOADED //
         
         s.execute(); // executing the command //
@@ -106,7 +108,7 @@ while(rs.next())
     public static double percentage() throws SQLException
     {
         Statement s = con.createStatement();
-        ResultSet rs = s.executeQuery("select COUNT(Is_Voted) FROM voter WHERE Is_Voted = TRUE");
+        ResultSet rs = s.executeQuery("select DISTINCT COUNT(Is_Voted) FROM voter WHERE Is_Voted = TRUE");
         int voted = 0,total_count = 1;
         double percentage;
 
@@ -122,7 +124,7 @@ while(rs.next())
             total_count = rs2.getInt(1);
         }
 
-         percentage = (voted * (100/total_count) / total_count * (100/total_count));
+         percentage = (voted  / total_count) * 100;
         return percentage;
 
     }
@@ -214,7 +216,7 @@ st.execute();
         
         public static ArrayList<String> GatherMailAdresses() throws SQLException
         {
-            Statement s = con.createStatement();
+        Statement s = con.createStatement();
         ResultSet rs = s.executeQuery("select voter.Email From voter");
         ArrayList<String> list;
         list = new ArrayList<>();
@@ -242,7 +244,7 @@ while(rs.next())
         {  
     try {
         ArrayList <String> list = new <String> ArrayList();
-        list = MysqlConnection.GatherMailAdresses();
+        list = GatherMailAdresses();
         for(int i=0;i<list.size();i++)
         {
             if(isValidEmailAddress(list.get(i)) == false)
@@ -250,7 +252,11 @@ while(rs.next())
                  Statement s = con.createStatement();
                  String sql = "UPDATE voter SET Email ='nonvalid@mail.com' WHERE Email= '"+list.get(i)+"'";
                  s.executeUpdate(sql);
-                System.out.println(""+list.get(i)+": is changed to nonvalid@mail.com");
+                System.out.println(""+list.get(i)+": is not valid so its changed to nonvalid@mail.com");
+            }
+            else
+            {
+                System.out.println(""+list.get(i)+": is valid so not changed");
             }
         }
     } catch (SQLException e) {
