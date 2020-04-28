@@ -11,8 +11,12 @@ import CE407.MysqlConnection.*;
 import static CE407.MysqlConnection.setSpecificData;
 import static CE407.MysqlConnection.updateCode;
 import static CE407.MysqlConnection.Is_Voted;
+import static CE407.MysqlConnection.Password_Checker;
+import static CE407.MysqlConnection.Update_Non_Valid_Emails;
 import static CE407.MysqlConnection.Who_Is_Voted;
 import static CE407.MysqlConnection.percentage;
+import static CE407.MysqlConnection.Vote;
+import static CE407.SendEmail.SendMessage;
 
 public class ConnectionTest 
 {
@@ -21,11 +25,19 @@ public class ConnectionTest
         
         MysqlConnection.getConnection();
         
-        System.out.println(percentage());
+        System.out.println(Password_Checker());
+        
+        //System.out.println(percentage());
+        
+        //SendMessage("oksanekici70@gmail.com","Lanet konu","Lanet Kadın");
         
         //System.out.println(isValidEmailAddress("dfgdfsdfzgzdfhgfgxhfxgjhnfxgjhfghjfxgjxhfg@gmail.com"));
         
         //isValidAll();
+        
+        //System.out.println("\n");
+        
+        //Update_Non_Valid_Emails();
         
         //System.out.println(CodeGenerator());
         
