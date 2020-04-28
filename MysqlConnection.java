@@ -266,10 +266,10 @@ while(rs.next())
         
         public static ArrayList<String> Password_Checker()
         {
-            ArrayList<String> list = new ArrayList<>();
-            
+   
+        ArrayList<String> list = new ArrayList<>(); 
         Statement s;
-    try {
+     try {
         s = con.createStatement();
         ResultSet rs;
         rs = s.executeQuery("SELECT ID FROM voter WHERE Password = 'Not_set'");
@@ -282,5 +282,17 @@ while(rs.next())
         System.out.println(e);
     }       
 return list;
+        }
+        
+        public static void Change_Password(String Password, String ID)
+        {
+    try {   
+         Statement s = con.createStatement();
+        String sql = "UPDATE voter SET Password = MD5('"+Password+"') WHERE ID ='"+ID+"'";
+        s.executeUpdate(sql);
+        System.out.println("Succesfully changed Password!");
+    } catch (SQLException e) {
+        System.out.println(e);
+    }
         }
 }
