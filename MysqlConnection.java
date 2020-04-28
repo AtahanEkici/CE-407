@@ -263,4 +263,24 @@ while(rs.next())
         System.out.println("Error: "+e);
     }
         }
+        
+        public static ArrayList<String> Password_Checker()
+        {
+            ArrayList<String> list = new ArrayList<>();
+            
+        Statement s;
+    try {
+        s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT ID FROM voter WHERE Password = 'Not_set'");
+        while(rs.next())
+        {
+            list.add(rs.getString(1));
+        }  
+        }catch (SQLException e) 
+        {
+        System.out.println(e);
+    }       
+return list;
+        }
 }
