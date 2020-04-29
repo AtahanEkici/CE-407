@@ -8,7 +8,7 @@ BEGIN
 DECLARE numLenght INT;
 SET numLenght = (SELECT char_length(NEW.Password));
 
-IF(numLneght < 8) THEN
+IF(numLenght < 8) THEN
 signal sqlstate '45000' set message_text = 'Your password is too short';
 END IF;
 END; 
