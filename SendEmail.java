@@ -52,7 +52,7 @@ try {
  InternetAddress.parse(to));
  
  // Set Subject
- message.setSubject("Your Code For Voting");
+ message.setSubject("Your Authentication Code For Voting");
  
  String Code = CodeGenerator();
  updateCode(receiver,Code);
@@ -70,7 +70,6 @@ System.out.println("Sent message successfully.... hopefully");
  throw new RuntimeException(e);
  }
  }
- 
  
  public static void SendMessage(String receiver,String Subject,String mesaj) throws InstantiationException, IllegalAccessException, SQLException {
  // Add recipient
@@ -183,7 +182,6 @@ System.out.println("Sent message successfully.... hopefully");
              System.out.println(""+list.get(i)+": is invalid");
          }
      }
-     
      }catch(SQLException e)
      {
          System.out.println(e);
