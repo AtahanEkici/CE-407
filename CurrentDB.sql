@@ -66,7 +66,7 @@ CREATE TABLE `integrity` (
 
 LOCK TABLES `integrity` WRITE;
 /*!40000 ALTER TABLE `integrity` DISABLE KEYS */;
-INSERT INTO `integrity` VALUES (1,4,723);
+INSERT INTO `integrity` VALUES (1,4,1567);
 /*!40000 ALTER TABLE `integrity` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -123,6 +123,7 @@ CREATE TABLE `voter` (
   `Address` varchar(70) DEFAULT NULL,
   `Email` varchar(150) NOT NULL,
   `Is_Voted` tinyint(1) DEFAULT '0',
+  `Password` varchar(150) DEFAULT 'Not_Set',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Email_UNIQUE` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -134,7 +135,7 @@ CREATE TABLE `voter` (
 
 LOCK TABLES `voter` WRITE;
 /*!40000 ALTER TABLE `voter` DISABLE KEYS */;
-INSERT INTO `voter` VALUES ('16820020678',NULL,'05433453732',22,'Kadifekale','atahanekici@hotmail.com',0),('22089345638',NULL,'05273382894',36,'Buca','berkay.omerbas@gmail.com',0),('60789024567',NULL,'05894356021',45,'LimonTepe','yigitdemircan@gmail.com',0);
+INSERT INTO `voter` VALUES ('16820020678',NULL,'5433453739',22,'Kadifekale','atahanekici@hotmail.com',0,'21232f297a57a5a743894a0e4a801fc3'),('22089345638',NULL,'5273382894',36,'Buca','berkay.omerbas@gmail.com',0,'52833cb4959db891c8242fda6b58c30a'),('60789024567',NULL,'5894356021',45,'LimonTepe','yigitdemircan@gmail.com',0,'52833cb4959db891c8242fda6b58c30a');
 /*!40000 ALTER TABLE `voter` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -174,18 +175,17 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `TEL_Control` BEFORE INSERT ON `voter` FOR EACH ROW BEGIN 
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `AGE_CHECK` BEFORE INSERT ON `voter` FOR EACH ROW BEGIN
 
 DECLARE numLength INT;
-SET numLength = (SELECT CHAR_LENGTH(NEW.Tel_num));
+SET numLength = NEW.Age;
 
-IF(numLength > 10) THEN
- signal sqlstate '45000' set message_text = 'Your telephone number *should not be* MORE than 10 digits';
+IF(numLength < 18) THEN
+ signal sqlstate '45000' set message_text = 'Your Age is too small to vote';
 
-ELSEIF(numLength < 10) THEN
- signal sqlstate '45000' set message_text = 'Your telephone number *should not be* LESS than 10 digits';
+ELSEIF(numLength > 199) THEN
+ signal sqlstate '45000' set message_text = 'You should not be able to live tbh';
 END IF;
-
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -201,16 +201,38 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `AGE_CHECK` BEFORE INSERT ON `voter` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `TEL_Control_INSERT` BEFORE INSERT ON `voter` FOR EACH ROW BEGIN 
 
 DECLARE numLength INT;
-SET numLength = NEW.Age;
+SET numLength = (SELECT CHAR_LENGTH(NEW.Tel_num));
 
-IF(numLength < 18) THEN
- signal sqlstate '45000' set message_text = 'Your Age is too small to vote';
+IF(numLength <> 10) THEN
+  signal sqlstate '45000' set message_text = 'Your telephone number should be 10 characters';
+END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `PASSWORD_CONTROL` BEFORE INSERT ON `voter` FOR EACH ROW BEGIN 
+DECLARE numLength INT;
+SET numLength = (SELECT CHAR_LENGTH(NEW.Password));
 
-ELSEIF(numLength > 199) THEN
- signal sqlstate '45000' set message_text = 'You should not be able to live tbh';
+IF(numLength < 8) THEN 
+signal sqlstate '45000' set message_text = 'Your password is too short';
+
+ELSEIF(numLenght > 150) THEN
+signal sqlstate '45000' set message_text = 'Your password is too long';
 END IF;
 END */;;
 DELIMITER ;
@@ -266,10 +288,59 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `TEL_Control_UPDATE` BEFORE UPDATE ON `voter` FOR EACH ROW BEGIN 
+
+DECLARE numLength INT;
+SET numLength = (SELECT CHAR_LENGTH(NEW.Tel_num));
+
+IF(numLength <> 10) THEN
+  signal sqlstate '45000' set message_text = 'Your telephone number should be 10 characters';
+END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `UPDATE_COUNT` AFTER UPDATE ON `voter` FOR EACH ROW BEGIN
 
 UPDATE voter.integrity SET integrity.update_count = integrity.update_count + 1;
 
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `PASSWORD_CONTROL_UPDATE` AFTER UPDATE ON `voter` FOR EACH ROW BEGIN
+
+DECLARE numLenght INT;
+SET numLenght = (SELECT char_length(NEW.Password));
+
+IF(numLenght < 8) THEN
+signal sqlstate '45000' set message_text = 'Your password is too short';
+
+ELSEIF(numLenght > 150) THEN
+signal sqlstate '45000' set message_text = 'Your password is too long';
+END IF;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -334,4 +405,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-22 16:51:00
+-- Dump completed on 2020-04-29 22:36:25
