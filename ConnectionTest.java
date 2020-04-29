@@ -6,8 +6,10 @@
 package CE407;
 import static CE407.MysqlConnection.GatherMailAdresses;
 import java.sql.*;
-import static CE407.SendEmail.*;
 import CE407.MysqlConnection.*;
+import static CE407.MysqlConnection.Change_Password;
+import static CE407.MysqlConnection.Check_For_Credentials;
+import static CE407.MysqlConnection.Display_All_Passwords;
 import static CE407.MysqlConnection.setSpecificData;
 import static CE407.MysqlConnection.updateCode;
 import static CE407.MysqlConnection.Is_Voted;
@@ -16,6 +18,7 @@ import static CE407.MysqlConnection.Update_Non_Valid_Emails;
 import static CE407.MysqlConnection.Who_Is_Voted;
 import static CE407.MysqlConnection.percentage;
 import static CE407.MysqlConnection.Vote;
+import static CE407.MysqlConnection.getConnection;
 import static CE407.SendEmail.SendMessage;
 
 public class ConnectionTest 
@@ -23,9 +26,15 @@ public class ConnectionTest
     public static void main(String args[]) throws SQLException, InstantiationException, IllegalAccessException
     { 
         
-        MysqlConnection.getConnection();
+        getConnection();
         
-        System.out.println(Password_Checker());
+        System.out.println(Check_For_Credentials("16820020678","admin"));
+        
+        //Change_Password("admin","16820020678");
+        
+        //Display_All_Passwords();
+        
+        //System.out.println(Password_Checker());
         
         //System.out.println(percentage());
         
