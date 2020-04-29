@@ -291,8 +291,51 @@ return list;
         String sql = "UPDATE voter SET Password = MD5('"+Password+"') WHERE ID ='"+ID+"'";
         s.executeUpdate(sql);
         System.out.println("Succesfully changed Password!");
-    } catch (SQLException e) {
+    } catch (SQLException e) 
+    {
         System.out.println(e);
     }
+        }
+        
+        public static void Display_All_Passwords()
+        {
+    try {
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT ID,Password FROM voter ");
+        
+        while(rs.next())
+        {
+            System.out.println("ID:"+rs.getString(1)+"  Password:"+rs.getString(2));
+        }
+            
+        rs = s.executeQuery("SELECT ID FROM voter WHERE Password = 'Not_set'");
+    } catch (SQLException ex) {
+        Logger.getLogger(MysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        }
+       
+        public static boolean Check_For_Credentials(String ID , String Password)
+        {
+            boolean result = false;
+    try {
+        
+        
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT EXISTS(SELECT ID,Password FROM voter WHERE ID ='"+ID+"' AND Password = md5('"+Password+"'))");
+        
+        while(rs.next())
+        {
+            result = rs.getBoolean(1);
+        }
+        
+     return result;
+       
+    } catch (SQLException ex) 
+    {
+        Logger.getLogger(MysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return false;
         }
 }
