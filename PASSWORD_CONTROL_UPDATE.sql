@@ -10,5 +10,8 @@ SET numLenght = (SELECT char_length(NEW.Password));
 
 IF(numLenght < 8) THEN
 signal sqlstate '45000' set message_text = 'Your password is too short';
+
+ELSEIF(numLenght > 150) THEN
+signal sqlstate '45000' set message_text = 'Your password is too long';
 END IF;
 END; 
