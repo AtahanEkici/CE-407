@@ -8,7 +8,9 @@ import static CE407.MysqlConnection.GatherMailAdresses;
 import java.sql.*;
 import CE407.MysqlConnection.*;
 import static CE407.MysqlConnection.Change_Password;
-import static CE407.MysqlConnection.Check_For_Credentials;
+import static CE407.MysqlConnection.Check_For_Credentials_Adaptive;
+import static CE407.MysqlConnection.Check_For_Credentials_Email;
+import static CE407.MysqlConnection.Check_For_Credentials_ID;
 import static CE407.MysqlConnection.Display_All_Passwords;
 import static CE407.MysqlConnection.setSpecificData;
 import static CE407.MysqlConnection.updateCode;
@@ -28,7 +30,11 @@ public class ConnectionTest
         
         getConnection();
         
-        System.out.println(Check_For_Credentials("16820020678","admin"));
+        //System.out.println(Check_For_Credentials_ID("16820020678","admin"));
+        
+        //System.out.println(Check_For_Credentials_Email("atahanekici@hotmail.com","admin"));
+        
+        System.out.println(Check_For_Credentials_Adaptive("16820020678","admin"));
         
         //Change_Password("admin","16820020678");
         
