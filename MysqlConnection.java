@@ -315,12 +315,10 @@ return list;
     }
         }
        
-        public static boolean Check_For_Credentials(String ID , String Password)
+        public static boolean Check_For_Credentials_ID(String ID , String Password)
         {
             boolean result = false;
     try {
-        
-        
         Statement s = con.createStatement();
         ResultSet rs;
         rs = s.executeQuery("SELECT EXISTS(SELECT ID,Password FROM voter WHERE ID ='"+ID+"' AND Password = md5('"+Password+"'))");
@@ -332,10 +330,78 @@ return list;
         
      return result;
        
-    } catch (SQLException ex) 
+    } catch (SQLException e) 
     {
-        Logger.getLogger(MysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println(e);
     }
-    return false;
+    return result;
         }
-}
+        
+        public static boolean Check_For_Credentials_Email(String Email , String Password)
+        {
+            boolean result = false;
+    try {
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT EXISTS(SELECT Email,Password FROM voter WHERE Email ='"+Email+"' AND Password = MD5('"+Password+"'))");
+        
+        while(rs.next())
+        {
+            result = rs.getBoolean(1);
+        }
+        
+     return result;
+       
+    } catch (SQLException e) 
+    {
+        System.out.println(e);
+    }
+    return result;
+        }
+        
+        public static boolean Check_For_Credentials_Adaptive(String string , String Password)
+        {
+            boolean result = false;
+            
+            if(string.contains("@"))
+            {
+                 try {
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT EXISTS(SELECT Email,Password FROM voter WHERE Email ='"+string+"' AND Password = MD5('"+Password+"'))");
+        
+        while(rs.next())
+        {
+            result = rs.getBoolean(1);
+        }
+        
+     return result;
+       
+    } catch (SQLException e) 
+    {
+        System.out.println(e);
+    }
+    return result;
+        }
+            else
+            {
+                try {
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT EXISTS(SELECT ID,Password FROM voter WHERE ID ='"+string+"' AND Password = MD5('"+Password+"'))");
+        
+        while(rs.next())
+        {
+            result = rs.getBoolean(1);
+        }
+        
+     return result;
+       
+    } catch (SQLException e) 
+    {
+        System.out.println(e);
+    }
+    return result;
+        }
+    }             
+}  
