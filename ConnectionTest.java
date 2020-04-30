@@ -44,7 +44,7 @@ public class ConnectionTest
         
         //System.out.println(percentage());
         
-        //SendMessage("oksanekici70@gmail.com","Lanet konu","Lanet Kadın");
+        //SendMessage("","","");
         
         //System.out.println(isValidEmailAddress("dfgdfsdfzgzdfhgfgxhfxgjhnfxgjhfghjfxgjxhfg@gmail.com"));
         
