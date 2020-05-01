@@ -35,7 +35,6 @@ String password = "1234"; // password for the database //
 Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj class file //
 
  con = DriverManager.getConnection(url,username,password); // 
- System.out.println("Connection successfull");
 }catch(ClassNotFoundException | SQLException e)
 { 
    System.out.println(e);
@@ -403,5 +402,26 @@ return list;
     }
     return result;
         }
-    }             
+    }
+        
+        public static boolean Check_Code(String ID , String Code)
+        {
+            boolean result = false;
+            
+            try {
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT EXISTS(SELECT ID,Code FROM voter WHERE ID ='"+ID+"' AND Code = '"+Code+"')");
+        
+        while(rs.next())
+        {
+             result = rs.getBoolean(1);
+        }     
+     return result;
+    } catch (SQLException e) 
+    {
+        System.out.println(e);
+    }
+            return result;
+        }
 }  
