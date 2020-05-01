@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 package CE407;
-import static CE407.MysqlConnection.GatherMailAdresses;
+
 import java.sql.*;
-import CE407.MysqlConnection.*;
+import static CE407.MysqlConnection.GatherMailAdresses;
 import static CE407.MysqlConnection.Change_Password;
+import static CE407.MysqlConnection.Check_Code;
 import static CE407.MysqlConnection.Check_For_Credentials_Adaptive;
 import static CE407.MysqlConnection.Check_For_Credentials_Email;
 import static CE407.MysqlConnection.Check_For_Credentials_ID;
@@ -21,6 +22,7 @@ import static CE407.MysqlConnection.Who_Is_Voted;
 import static CE407.MysqlConnection.percentage;
 import static CE407.MysqlConnection.Vote;
 import static CE407.MysqlConnection.getConnection;
+import static CE407.SendEmail.CodeGenerator;
 import static CE407.SendEmail.SendMessage;
 
 public class ConnectionTest 
@@ -30,11 +32,15 @@ public class ConnectionTest
         
         getConnection();
         
+        //updateCode("atahanekici@hotmail.com",CodeGenerator());
+        
+        //System.out.println(Check_Code("16820020678","0915"));
+        
         //System.out.println(Check_For_Credentials_ID("16820020678","admin"));
         
         //System.out.println(Check_For_Credentials_Email("atahanekici@hotmail.com","admin"));
         
-        System.out.println(Check_For_Credentials_Adaptive("16820020678","admin"));
+        //System.out.println(Check_For_Credentials_Adaptive("16820020678","admin"));
         
         //Change_Password("admin","16820020678");
         
@@ -44,7 +50,7 @@ public class ConnectionTest
         
         //System.out.println(percentage());
         
-        //SendMessage("","","");
+        //SendMessage("oksanekici70@gmail.com","Lanet konu","Lanet Kadın");
         
         //System.out.println(isValidEmailAddress("dfgdfsdfzgzdfhgfgxhfxgjhnfxgjhfghjfxgjxhfg@gmail.com"));
         
@@ -56,7 +62,6 @@ public class ConnectionTest
         
         //System.out.println(CodeGenerator());
         
-        //updateCode("atahanekici@hotmail.com",CodeGenerator());
         
         //System.out.println(MysqlConnection.Is_Voted());
         
