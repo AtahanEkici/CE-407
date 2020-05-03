@@ -24,6 +24,9 @@ import static CE407.MysqlConnection.Vote;
 import static CE407.MysqlConnection.getConnection;
 import static CE407.SendEmail.CodeGenerator;
 import static CE407.SendEmail.SendMessage;
+import static CE407.MysqlConnection.set_Username;
+import static CE407.MysqlConnection.return_Username;
+
 
 public class ConnectionTest 
 {
@@ -31,6 +34,10 @@ public class ConnectionTest
     { 
         
         getConnection();
+        
+        //set_Username("123","16820020678");
+        
+        //System.out.println(return_Username("atahanekici@hotmail.com"));
         
         //updateCode("atahanekici@hotmail.com",CodeGenerator());
         
@@ -40,7 +47,7 @@ public class ConnectionTest
         
         //System.out.println(Check_For_Credentials_Email("atahanekici@hotmail.com","admin"));
         
-        //System.out.println(Check_For_Credentials_Adaptive("16820020678","admin"));
+        //System.out.println(Check_For_Credentials_Adaptive("123","admin"));
         
         //Change_Password("admin","16820020678");
         
@@ -100,4 +107,8 @@ public class ConnectionTest
        
        //SendAll(MysqlConnection.GatherMailAdresses());
     }   
+
+    private static boolean get_Username() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
