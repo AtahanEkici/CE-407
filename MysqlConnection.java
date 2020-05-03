@@ -216,7 +216,7 @@ st.execute();
         public static ArrayList<String> GatherMailAdresses() throws SQLException
         {
         Statement s = con.createStatement();
-        ResultSet rs = s.executeQuery("select voter.Email From voter");
+        ResultSet rs = s.executeQuery("select Email From voter");
         ArrayList<String> list;
         list = new ArrayList<>();
         
@@ -490,5 +490,27 @@ return list;
     }
         }
         }
+
+        public static boolean Check_Mails(String string)
+        {
+    try {
         
+        if(isValidEmailAddress(""+string+"") == false)
+        {
+            System.out.println("Not even valid Mail address");
+        }
+        
+        else if(GatherMailAdresses().contains(""+string+""))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }                 
+    } catch (SQLException ex) {
+        Logger.getLogger(MysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return false;
+        }
 }
