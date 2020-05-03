@@ -107,8 +107,4 @@ public class ConnectionTest
        
        //SendAll(MysqlConnection.GatherMailAdresses());
     }   
-
-    private static boolean get_Username() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
