@@ -33,7 +33,6 @@ String password = "1234"; // password for the database //
    try
 {
 Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  // Using updated cj class file //
-
  con = DriverManager.getConnection(url,username,password); // 
 }catch(ClassNotFoundException | SQLException e)
 { 
@@ -50,10 +49,10 @@ while(rs.next())
         System.out.println(rs.getString(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+ " " +rs.getInt(4)+ " " +rs.getString(5)+" "+rs.getString(6)+" ---Voted: "+rs.getBoolean(7)+" ---Password: "+rs.getString(8)); // geting data from 5 different columns //
     }
     
-    public static void setAllData(String id,String code, String tel_num, int age,String address, String email,boolean Is_Voted, String Password) throws SQLException // Function //
+    public static void setAllData(String id,String code, String tel_num, int age,String address, String email,boolean Is_Voted, String Password,String Username) throws SQLException // Function //
     {
         try{
-        PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?,?,?,?,?)"); // inserting corresponding tuples //
+        PreparedStatement s = con.prepareStatement("insert into voter values(?,?,?,?,?,?,?,?,?)"); // inserting corresponding tuples //
         
         // PARAMATER LOADING //
         s.setString(1,id);
@@ -64,6 +63,7 @@ while(rs.next())
         s.setString(6,email);
         s.setBoolean(7, Is_Voted);
         s.setString(8,Password);
+        s.setString(9, Username);
         // PARAMETERS LOADED //
         
         s.execute(); // executing the command //
@@ -387,7 +387,7 @@ return list;
                 try {
         Statement s = con.createStatement();
         ResultSet rs;
-        rs = s.executeQuery("SELECT EXISTS(SELECT ID,Password FROM voter WHERE ID ='"+string+"' AND Password = MD5('"+Password+"'))");
+        rs = s.executeQuery("SELECT EXISTS(SELECT ID,Password FROM voter WHERE Username ='"+string+"' AND Password = MD5('"+Password+"'))");
         
         while(rs.next())
         {
@@ -424,4 +424,71 @@ return list;
     }
             return result;
         }
-}  
+        
+        public static String return_Username(String string)
+        {
+            String Username = "Error";
+             
+    try {
+        if(string.contains("@"))
+        {
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT Username FROM voter WHERE Email ='"+string+"'");
+        
+        while(rs.next())
+        {
+            Username = rs.getString(1);
+        }
+        
+        return Username;
+        }
+        
+        else
+        {
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT Username FROM voter WHERE ID ='"+string+"'");
+        
+        while(rs.next())
+        {
+            Username = rs.getString(1);
+        }
+        
+        return Username;
+        }  
+    } catch (SQLException ex) {
+        Logger.getLogger(MysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return Username;
+        }
+        
+        
+        public static void set_Username(String Username , String string)
+        {
+{
+    try {
+        
+        if(string.contains("@"))
+        {
+        Statement s1 = con.createStatement();
+        String sql = "update voter set Username = '"+Username+"' where Email = '"+string+"'";
+        s1.executeUpdate(sql);
+        System.out.println("username changed to: "+Username+"");
+        }
+        
+        else
+        {
+        Statement s2 = con.createStatement();
+        String sq2 = "update voter set Username = '"+Username+"' where ID = '"+string+"'";
+        s2.executeUpdate(sq2);
+        System.out.println("Username changed to: "+Username+""); 
+        }
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(MysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        }
+        }
+        
+}
