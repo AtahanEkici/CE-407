@@ -66,7 +66,7 @@ CREATE TABLE `integrity` (
 
 LOCK TABLES `integrity` WRITE;
 /*!40000 ALTER TABLE `integrity` DISABLE KEYS */;
-INSERT INTO `integrity` VALUES (1,4,1567);
+INSERT INTO `integrity` VALUES (1,4,2141);
 /*!40000 ALTER TABLE `integrity` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -124,8 +124,10 @@ CREATE TABLE `voter` (
   `Email` varchar(150) NOT NULL,
   `Is_Voted` tinyint(1) DEFAULT '0',
   `Password` varchar(150) DEFAULT 'Not_Set',
+  `Username` varchar(150) DEFAULT 'Not_Set',
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `Email_UNIQUE` (`Email`)
+  UNIQUE KEY `Email_UNIQUE` (`Email`),
+  UNIQUE KEY `Tel_num_UNIQUE` (`Tel_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -135,7 +137,7 @@ CREATE TABLE `voter` (
 
 LOCK TABLES `voter` WRITE;
 /*!40000 ALTER TABLE `voter` DISABLE KEYS */;
-INSERT INTO `voter` VALUES ('16820020678',NULL,'5433453739',22,'Kadifekale','atahanekici@hotmail.com',0,'21232f297a57a5a743894a0e4a801fc3'),('22089345638',NULL,'5273382894',36,'Buca','berkay.omerbas@gmail.com',0,'52833cb4959db891c8242fda6b58c30a'),('60789024567',NULL,'5894356021',45,'LimonTepe','yigitdemircan@gmail.com',0,'52833cb4959db891c8242fda6b58c30a');
+INSERT INTO `voter` VALUES ('16820020678',NULL,'5433453739',22,'Kadifekale','atahanekici@hotmail.com',0,'21232f297a57a5a743894a0e4a801fc3','admin1'),('22089345638',NULL,'5273382894',36,'Buca','berkay.omerbas@gmail.com',0,'52833cb4959db891c8242fda6b58c30a','admin2'),('60789024567',NULL,'5894356021',45,'LimonTepe','yigitdemircan@gmail.com',0,'52833cb4959db891c8242fda6b58c30a','admin3');
 /*!40000 ALTER TABLE `voter` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -405,4 +407,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-29 22:36:25
+-- Dump completed on 2020-05-03 17:21:45
