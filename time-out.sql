@@ -1,0 +1,7 @@
+CREATE EVENT `TIME_OUT`
+ ON SCHEDULE EVERY 10 MINUTE 
+ STARTS '2020-04-17 00:00:00'
+ ON COMPLETION NOT PRESERVE 
+ ENABLE COMMENT 'Removes Voters codes every 10 minutes' 
+ DO UPDATE voter.voter 
+ SET voter.Code = null;
