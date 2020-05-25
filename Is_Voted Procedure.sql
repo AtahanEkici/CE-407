@@ -25,7 +25,8 @@ FETCH cur INTO id,temp;
 IF(no_more_rows = TRUE) THEN LEAVE read_loop;
  END IF;
  
- SET Is_Voted = temp;
+ IF(voter_id = id) THEN SET Is_Voted = temp;
+END IF;
 
 END LOOP;
 
