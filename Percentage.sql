@@ -31,6 +31,6 @@ END IF;
 END LOOP;
 CLOSE cur;
 
-SELECT percentage;
+SELECT candidate,percentage;
 
 END; //
