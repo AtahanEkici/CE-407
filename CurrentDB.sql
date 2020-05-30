@@ -39,7 +39,7 @@ CREATE TABLE `candidate` (
 
 LOCK TABLES `candidate` WRITE;
 /*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
-INSERT INTO `candidate` VALUES ('Trump',0);
+INSERT INTO `candidate` VALUES ('Hillary',0),('Trump',0);
 /*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `integrity` (
 
 LOCK TABLES `integrity` WRITE;
 /*!40000 ALTER TABLE `integrity` DISABLE KEYS */;
-INSERT INTO `integrity` VALUES (1,4,2141);
+INSERT INTO `integrity` VALUES (1,4,7469);
 /*!40000 ALTER TABLE `integrity` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -397,6 +397,105 @@ DELIMITER ;
 --
 -- Dumping routines for database 'voter'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `IfVoted` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `IfVoted`(IN voter_id varchar(11))
+    READS SQL DATA
+BEGIN
+
+DECLARE id varchar(11);
+DECLARE User_n varchar (200);
+DECLARE Is_Voted BOOLEAN;
+DECLARE temp BOOLEAN;
+DECLARE no_more_rows BOOLEAN; 
+
+DECLARE cur CURSOR FOR 
+SELECT DISTINCT voter.ID,voter.Is_Voted FROM voter WHERE voter_id = voter.ID;
+
+DECLARE CONTINUE HANDLER FOR NOT FOUND
+SET no_more_rows = TRUE;  
+
+OPEN cur;
+
+read_loop: LOOP
+ 
+FETCH cur INTO id,temp;
+
+IF(no_more_rows = TRUE) THEN LEAVE read_loop;
+ END IF;
+ 
+ IF(voter_id = id) THEN SET Is_Voted = temp;
+END IF;
+
+END LOOP;
+
+CLOSE cur;
+
+SELECT Is_Voted;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `Percentage` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Percentage`( IN vot varchar(200))
+    READS SQL DATA
+BEGIN
+
+DECLARE percentage FLOAT;
+DECLARE Total_Vote INT;
+DECLARE Particular_vote INT;
+DECLARE candidate varchar(200);
+DECLARE no_more_rows BOOLEAN;
+
+DECLARE cur  CURSOR FOR
+SELECT COUNT(candidate.Vote_Count),candidate.Vote_Count,candidate.Name FROM candidate;
+
+DECLARE CONTINUE HANDLER FOR NOT FOUND
+SET no_more_rows = TRUE;  
+
+OPEN cur;
+
+read_loop:LOOP
+FETCH cur INTO Total_Vote,Particular_vote,candidate;
+
+IF no_more_rows THEN 
+  LEAVE read_loop;   
+  END IF;
+  
+IF(candidate = vot ) THEN SET percentage = ( Particular_vote / Total_Vote ) * 100;
+END IF;
+
+END LOOP;
+CLOSE cur;
+
+SELECT candidate,percentage;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -407,4 +506,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-03 17:21:45
+-- Dump completed on 2020-05-30 14:10:33
