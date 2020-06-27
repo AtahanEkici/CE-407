@@ -5,7 +5,7 @@
 <%
 String Email = (String)session.getAttribute("login_email");    
 Object Login = session.getAttribute("IsLoggedIn");
-    
+boolean Is_Voted = true;   
 if(Email == null)
 {
     response.sendRedirect("index.jsp");
@@ -14,6 +14,7 @@ if(Email == null)
 else if(Email != null)
 {
     boolean Is_Validated = DBConnect.IsValidated(Email);
+    Is_Voted = DBConnect.IsVoted(Email);
     
     if(Is_Validated == true)
     {
@@ -97,12 +98,18 @@ else if(Email != null)
 									<div class="header-row">
 										<nav class="header-nav-top">
 											<ul class="nav nav-pills text-uppercase text-2">
-												<li class="nav-item nav-item-anim-icon d-none d-md-block">
+												<%
+                                                                                                if(Login == null)
+                                                                                                {
+                                                                                                %> <li class="nav-item nav-item-anim-icon d-none d-md-block">
 													<a class="nav-link pl-0" href="login.jsp"><i class="fas fa-angle-right"></i> Login</a>
 												</li>
-												<li class="nav-item nav-item-anim-icon d-none d-md-block">
+                                                                                                        <li class="nav-item nav-item-anim-icon d-none d-md-block">
 													<a class="nav-link" href="Register.jsp"><i class="fas fa-angle-right"></i> Register</a>
 												</li>
+                                                                                               <%        
+                                                                                                }
+                                                                                             %>
 											</ul>
 										</nav>
 									</div>
@@ -151,11 +158,18 @@ else if(Email != null)
 															About Us
 														</a>
 													</li>
-													<li class="dropdown">
+													 <%
+                                                                                                            if(Is_Voted == false)
+                                                                                                            {
+                                                                                                            %>
+                                                                                                            <li class="dropdown">
 														<a class="dropdown-item" href="vote.jsp">
 															Vote
 														</a>
-													</li>
+													    </li> 
+                                                                                                         <%
+                                                                                                            }
+                                                                                                         %> 
 													
 													<li class="dropdown">
 														<a class="dropdown-item" href="contact.jsp">

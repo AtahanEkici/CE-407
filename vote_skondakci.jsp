@@ -1,22 +1,21 @@
-<%@page import="java.util.*,java.io.*, java.net.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Servlet.DBConnect"%>
 
 <%
 DBConnect.getConnectionAWS("voter");
-String Email = (String)session.getAttribute("login_email");
-if(Email != null)
-{
-    if(DBConnect.IsVoted(Email) == true)
-    {
-        response.sendRedirect("index.jsp");
-    }
-}
 Object Login = session.getAttribute("IsLoggedIn");
-if(Login == null || Login.equals(false))
+String Email = (String)session.getAttribute("login_email");
+
+if(Email == null)
 {
-    response.sendRedirect("index.jsp");
+response.sendRedirect("index.jsp");
 }
+
+else if(Login == null)
+{
+response.sendRedirect("index.jsp");
+}
+
 %>
 <!DOCTYPE html>
 <html>
@@ -93,12 +92,18 @@ if(Login == null || Login.equals(false))
 									<div class="header-row">
 										<nav class="header-nav-top">
 											<ul class="nav nav-pills text-uppercase text-2">
-												<li class="nav-item nav-item-anim-icon d-none d-md-block">
+												<%
+                                                                                                if(Login == null)
+                                                                                                {
+                                                                                                %> <li class="nav-item nav-item-anim-icon d-none d-md-block">
 													<a class="nav-link pl-0" href="login.jsp"><i class="fas fa-angle-right"></i> Login</a>
 												</li>
-												<li class="nav-item nav-item-anim-icon d-none d-md-block">
+                                                                                                        <li class="nav-item nav-item-anim-icon d-none d-md-block">
 													<a class="nav-link" href="Register.jsp"><i class="fas fa-angle-right"></i> Register</a>
 												</li>
+                                                                                               <%        
+                                                                                                }
+                                                                                             %>
 											</ul>
 										</nav>
 									</div>
@@ -147,11 +152,7 @@ if(Login == null || Login.equals(false))
 															About Us
 														</a>
 													</li>
-													<li class="dropdown">
-														<a class="dropdown-item" href="vote.jsp">
-															Vote
-														</a>
-													</li>
+													
 													<li class="dropdown">
 														<a class="dropdown-item" href="faq.jsp">
 															How To Vote?
@@ -222,12 +223,19 @@ if(Login == null || Login.equals(false))
 								<div class="featured-boxes">
 									<div class="row">
 										<div class="col-md-12">                   
-                                                                                        <%  
-                                                                                            DBConnect.setVotedStatus(Email);
-                                                                                            DBConnect.Increment_Vote(2);
-                                                                                        %>
-											<p class="lead">Successfully Voted Süleyman Kondakçı</p>
-                                                                                        <p class="lead">His Current Vote is : <%=DBConnect.getVote(2)%></p>
+<% 
+if(Email != null && DBConnect.IsVoted(Email) == false)
+    {
+DBConnect.setVotedStatus(Email);
+DBConnect.Increment_Vote(2);
+
+%>
+<p class="lead">Successfully Voted Süleyman Kondakçı</p>
+<p class="lead">His Current Vote is : <%=DBConnect.getVote(2)%></p>
+<%
+}
+%>
+											<p class="lead">You Can't Vote Twice</p>
    									</div>
                                                                                                 <meta http-equiv="Refresh" content="5;url=index.jsp">
 													
